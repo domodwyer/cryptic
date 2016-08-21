@@ -31,9 +31,9 @@ func GetStore(config config.Store) (store.Interface, error) {
 		)
 
 		// Connect to DB
-		db, err := sql.Open("mysql", dsn)
-		if err != nil {
-			return nil, err
+		db, err2 := sql.Open("mysql", dsn)
+		if err2 != nil {
+			return nil, err2
 		}
 
 		// Configure DB store
