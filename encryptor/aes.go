@@ -9,7 +9,7 @@ import (
 	"io"
 )
 
-// AESCTREncryptor provides AES encryption of secrets with SHA-512 used for
+// AESCTREncryptor provides AES encryption of secrets with SHA-256 used for
 // message authentication.
 type AESCTREncryptor struct {
 	aesKey  []byte
@@ -18,7 +18,7 @@ type AESCTREncryptor struct {
 }
 
 // NewAES returns an initialised Encryptor using AES in CTR (counter) mode and
-// SHA-512 for message authentication.
+// SHA-256 for message authentication.
 func NewAES(aesKey, hmacKey []byte) (*AESCTREncryptor, error) {
 	if len(hmacKey) == 0 {
 		return nil, ErrHmacKeyTooShort
