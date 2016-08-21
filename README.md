@@ -81,7 +81,7 @@ AES:
   Key: "changeme"
   HmacKey: "changeme"
 
-# KMS uses AES-256 and SHA512 for HMAC
+# KMS uses AES-256 and SHA256 for HMAC
 KMS:
   KeyID: "427a117a-ac47-4c90-b7fe-b33fe1a7a241"
   Region: "eu-west-1"
