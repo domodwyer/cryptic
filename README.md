@@ -17,7 +17,7 @@
 # Usage
 Put a password somewhere: 
 ```
-./put -name=ApiKey -value="be65d27ae088a0e03fd8e1331d90b01649464cb6"
+./put -name=ApiKey -value="be65d27ae088a0e03fd8e1331d90b01649464cb7"
 ```
 
 Get a password back out somewhere else:
