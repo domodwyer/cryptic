@@ -108,7 +108,7 @@ Using IAM roles you can control read access to only your production machines for
 
 Cryptic gets a secure 512-bit key from KMS and uses that to encrypt your data. To decrypt, first the stored key is sent to KMS for decryption, and the result is used to decrypt the AES-256 encrypted secret locally - your encrypted secret can't be recovered without both KMS and your AES secret.
 
-Included is a [terraform](https://www.terraform.io/) configration to generate a KMS key - `terraform apply` and it'll return a key ID such as `427a117a-ac47-4c90-b7fe-b33fe1a7a241` (or make it [manually](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html)).
+Included is a [terraform](https://www.terraform.io/) configuration to generate a KMS key - `terraform apply` and it'll return a key ID such as `427a117a-ac47-4c90-b7fe-b33fe1a7a241` (or make it [manually](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html)).
 
 Assuming you have the AWS CLI installed and credentials configured, all you need is to configure like above and go!
 
