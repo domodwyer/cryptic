@@ -8,14 +8,14 @@
 </p>
 <br /><br />
 
-- Proven encryption, by default uses *AES-256* with *SHA-512* for integrity checks.
+- Proven encryption, by default uses *AES-256* with *SHA-256* for integrity checks.
 - Supports multiple data stores - use infrastructure you already have.
 - No dependency hell: single binary to store a secret, one more to fetch.
 - Use [Amazon KMS](https://aws.amazon.com/kms/) key wrapping to further control access to sensitive information.
 - Super **simple** to use!
 
 # Usage
-Put a password somewhere: 
+Put a password somewhere:
 ```
 ./put -name=ApiKey -value="be65d27ae088a0e03fd8e1331d90b01649464cb7"
 ```
