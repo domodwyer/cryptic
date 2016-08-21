@@ -33,7 +33,7 @@ export API_KEY=$(get -name=ApiKey)
 # Installation
 Download a [release](https://github.com/domodwyer/cryptic/releases) for the binaries and get going straight away.
 
-Drop a simple YAML file in the same directory as the binary (`./crytic.yml` or `/etc/cryptic/cryptic.yml`  for a global configuration) to configure encryption and stores - below is a minimal example:
+Drop a simple YAML file in the same directory as the binary (`./cryptic.yml` or `/etc/cryptic/cryptic.yml`  for a global configuration) to configure encryption and stores - below is a minimal example:
 
 ```yml
 Store: "db"
