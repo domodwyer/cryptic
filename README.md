@@ -76,7 +76,7 @@ Redis:
 # Encryptor can be either 'aes' or 'kms'
 Encryptor: "kms"
 
-# AES key size is variable (16, 24, 32 chars) - uses SHA512 for HMAC
+# AES key size is variable (16, 24, 32 chars) - uses SHA256 for HMAC
 AES:
   Key: "changeme"
   HmacKey: "changeme"
