@@ -25,6 +25,7 @@ type Encryptor interface {
 	SelectedEncryptor
 	KMS
 	AES
+	KDF
 }
 
 type viperStore struct{}

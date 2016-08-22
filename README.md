@@ -37,7 +37,7 @@ Drop a simple YAML file in the same directory as the binary (`./cryptic.yml` or 
 
 ```yml
 Store: "db"
-Encryptor: "aes"
+Encryptor: "aes-pbkdf2"
 
 DB:
   Host: "127.0.0.1:3306"
@@ -45,9 +45,11 @@ DB:
   Username: "root"
   Password: "password"
 
+# When in "aes-pbkdf2" mode, the Key parameter is hashed
+# 4096 times with SHA-512 and used as the key for AES-256
+
 AES:
-  Key: "anAesTestKey1234" # 16, 24, or 32 characters long. More is better.
-  HmacKey: "superSecretHmacKey-867a13rr3117aac4£*"
+  Key: "super-secret-key" 
 ```
 
 # Configuration
@@ -73,13 +75,13 @@ Redis:
   WriteTimeout: "5s"
   MaxRetries: 0
 
-# Encryptor can be either 'aes' or 'kms'
+# Encryptor can be either 'aes-pbkdf2', 'aes' or 'kms'
 Encryptor: "kms"
 
-# AES key size is variable (16, 24, 32 chars) - uses SHA256 for HMAC
+# AES key size must be 16, 24 or 32 chars if encryptor = 'aes'
 AES:
   Key: "changeme"
-  HmacKey: "changeme"
+  HmacKey: "changeme" # only needed if encryptor = 'aes'
 
 # KMS uses AES-256 and SHA256 for HMAC
 KMS:
