@@ -8,14 +8,14 @@
 </p>
 <br /><br />
 
-- Proven encryption, by default uses *AES-256* with *SHA-512* for integrity checks.
+- Proven encryption, by default uses *AES-256* with *SHA-256* for integrity checks.
 - Supports multiple data stores - use infrastructure you already have.
 - No dependency hell: single binary to store a secret, one more to fetch.
 - Use [Amazon KMS](https://aws.amazon.com/kms/) key wrapping to further control access to sensitive information.
 - Super **simple** to use!
 
 # Usage
-Put a password somewhere: 
+Put a password somewhere:
 ```
 ./put -name=ApiKey -value="be65d27ae088a0e03fd8e1331d90b01649464cb7"
 ```
@@ -33,7 +33,7 @@ export API_KEY=$(get -name=ApiKey)
 # Installation
 Download a [release](https://github.com/domodwyer/cryptic/releases) for the binaries and get going straight away.
 
-Drop a simple YAML file in the same directory as the binary (`./crytic.yml` or `/etc/cryptic/cryptic.yml`  for a global configuration) to configure encryption and stores - below is a minimal example:
+Drop a simple YAML file in the same directory as the binary (`./cryptic.yml` or `/etc/cryptic/cryptic.yml`  for a global configuration) to configure encryption and stores - below is a minimal example:
 
 ```yml
 Store: "db"
@@ -76,12 +76,12 @@ Redis:
 # Encryptor can be either 'aes' or 'kms'
 Encryptor: "kms"
 
-# AES key size is variable (16, 24, 32 chars) - uses SHA512 for HMAC
+# AES key size is variable (16, 24, 32 chars) - uses SHA256 for HMAC
 AES:
   Key: "changeme"
   HmacKey: "changeme"
 
-# KMS uses AES-256 and SHA512 for HMAC
+# KMS uses AES-256 and SHA256 for HMAC
 KMS:
   KeyID: "427a117a-ac47-4c90-b7fe-b33fe1a7a241"
   Region: "eu-west-1"
@@ -108,7 +108,7 @@ Using IAM roles you can control read access to only your production machines for
 
 Cryptic gets a secure 512-bit key from KMS and uses that to encrypt your data. To decrypt, first the stored key is sent to KMS for decryption, and the result is used to decrypt the AES-256 encrypted secret locally - your encrypted secret can't be recovered without both KMS and your AES secret.
 
-Included is a [terraform](https://www.terraform.io/) configration to generate a KMS key - `terraform apply` and it'll return a key ID such as `427a117a-ac47-4c90-b7fe-b33fe1a7a241` (or make it [manually](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html)).
+Included is a [terraform](https://www.terraform.io/) configuration to generate a KMS key - `terraform apply` and it'll return a key ID such as `427a117a-ac47-4c90-b7fe-b33fe1a7a241` (or make it [manually](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html)).
 
 Assuming you have the AWS CLI installed and credentials configured, all you need is to configure like above and go!
 
