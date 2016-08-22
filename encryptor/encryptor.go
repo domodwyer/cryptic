@@ -5,6 +5,7 @@ const (
 	Nop uint8 = iota
 	AESCTR
 	KMSWrapped
+	Pbkdf2
 )
 
 // Encryptor defines the Encrypt method, used to encrypt the given plain-text.
@@ -22,3 +23,7 @@ type EncryptDecryptor interface {
 	Encryptor
 	Decryptor
 }
+
+// EncryptionProvider implementers should return an initalised Encryptor where
+// key is the key material for initalisation.
+type EncryptionProvider func(key []byte) (EncryptDecryptor, error)

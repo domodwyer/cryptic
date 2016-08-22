@@ -15,10 +15,6 @@ type KMS struct {
 	Provider EncryptionProvider
 }
 
-// EncryptionProvider implementers should return an initalised Encryptor where
-// key is the unwrapped key material for initalisation.
-type EncryptionProvider func(key []byte) (EncryptDecryptor, error)
-
 type kmsInterface interface {
 	GenerateDataKey(input *kms.GenerateDataKeyInput) (*kms.GenerateDataKeyOutput, error)
 	Decrypt(input *kms.DecryptInput) (*kms.DecryptOutput, error)

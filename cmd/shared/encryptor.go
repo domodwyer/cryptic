@@ -14,6 +14,9 @@ func GetEncryptor(config config.Encryptor) (encryptor.EncryptDecryptor, error) {
 	var err error
 
 	switch config.Encryptor() {
+	case "aes-pbkdf2":
+		enc, err = encryptor.NewKDF([]byte(config.KDFKey()))
+
 	case "aes":
 		enc, err = encryptor.NewAES([]byte(config.AESKey()), []byte(config.AESHmacKey()))
 

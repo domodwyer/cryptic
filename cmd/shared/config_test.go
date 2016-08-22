@@ -7,6 +7,7 @@ type mockConfig struct {
 	kmsRegion  string
 	aesKey     string
 	aesHmacKey string
+	kdfKey     string
 }
 
 func (m mockConfig) Store() string {
@@ -31,4 +32,8 @@ func (m mockConfig) AESKey() string {
 
 func (m mockConfig) AESHmacKey() string {
 	return m.aesHmacKey
+}
+
+func (m mockConfig) KDFKey() string {
+	return m.kdfKey
 }

@@ -103,3 +103,45 @@ func TestGetEncryptor_KMS(t *testing.T) {
 		}
 	}
 }
+
+func TestGetEncryptor_KDF(t *testing.T) {
+	tests := []struct {
+		// Test description.
+		name string
+		// Parameters.
+		config config.Encryptor
+		// Expected results.
+		wantErr bool
+	}{
+		{
+			"KDF",
+			mockConfig{
+				encryptor: "aes-pbkdf2",
+				kdfKey:    "ok",
+			},
+			false,
+		},
+		{
+			"Key too short",
+			mockConfig{
+				encryptor: "aes-pbkdf2",
+				kdfKey:    "",
+			},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		got, err := GetEncryptor(tt.config)
+		if (err != nil) != tt.wantErr {
+			t.Errorf("%q. getEncryptor() error = %v, wantErr %v", tt.name, err, tt.wantErr)
+			continue
+		}
+		if err != nil {
+			continue
+		}
+
+		if _, ok := got.(*encryptor.KDF); !ok {
+			t.Errorf("%q. getEncryptor() not correct type", tt.name)
+		}
+	}
+}

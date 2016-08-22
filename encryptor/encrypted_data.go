@@ -19,6 +19,10 @@ type EncryptedData struct {
 	Context    map[string]interface{}
 }
 
+func init() {
+	gob.Register(kdfParameters{})
+}
+
 // MarshalBinary returns the EncryptedData struct encoded into a slice of bytes
 // using Gob.
 func (e EncryptedData) MarshalBinary() ([]byte, error) {
