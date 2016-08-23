@@ -9,6 +9,10 @@ import (
 
 const kdfKeySize = 64
 
+// KDF implements PBKDF2, deriving a key using SHA-512 and passing it to
+// Provider.
+//
+// By default Provider is AES-512.
 type KDF struct {
 	Provider   EncryptionProvider
 	SaltSize   int
@@ -22,6 +26,8 @@ type kdfParameters struct {
 	Iterations int
 }
 
+// NewKDF by default returns a AESCTR struct that has been wrapped with KDF,
+// enabling PBKDF2 support.
 func NewKDF(sourceKey []byte) (*KDF, error) {
 	if len(sourceKey) < 1 {
 		return nil, ErrKeyTooShort
@@ -39,6 +45,8 @@ func NewKDF(sourceKey []byte) (*KDF, error) {
 	}, nil
 }
 
+// Encrypt uses the Encryptor returned by Provider, supplying it with key
+// material derived from SourceKey using SHA-512.
 func (e KDF) Encrypt(secret []byte) (*EncryptedData, error) {
 	// Get a random salt
 	salt := make([]byte, e.SaltSize)
@@ -80,6 +88,8 @@ func (e KDF) Encrypt(secret []byte) (*EncryptedData, error) {
 	return data, nil
 }
 
+// Decrypt uses values stored in Context to derive the key material from
+// SourceKey, and passes it to the Encryptor provided by Provider.
 func (e KDF) Decrypt(data *EncryptedData) ([]byte, error) {
 	// Ensure this data used KDF
 	if data.Type != Pbkdf2 {
