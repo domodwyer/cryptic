@@ -2,7 +2,7 @@ package config
 
 import "github.com/spf13/viper"
 
-// AES defines config getters for the AES Encryptor parameters.
+// KDF defines the configuration options for PBKDF2 support
 type KDF interface {
 	KDFKey() string
 }
