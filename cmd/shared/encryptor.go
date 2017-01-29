@@ -10,30 +10,36 @@ import (
 // GetEncryptor returns a concrete type that implements EncryptDecryptor based
 // on the configured Encryptor value in the config file.
 func GetEncryptor(config config.Encryptor) (encryptor.EncryptDecryptor, error) {
-	var enc encryptor.EncryptDecryptor
-	var err error
-
 	switch config.Encryptor() {
 	case "aes-pbkdf2":
-		enc, err = encryptor.NewKDF([]byte(config.KDFKey()))
+		return encryptor.NewKDF([]byte(config.KDFKey()))
 
 	case "aes":
-		enc, err = encryptor.NewAES([]byte(config.AESKey()), []byte(config.AESHmacKey()))
+		return encryptor.NewAES([]byte(config.AESKey()), []byte(config.AESHmacKey()))
+
+	case "aes-gcm-pbkdf2":
+		enc, err := encryptor.NewKDF([]byte(config.KDFKey()))
+		if err != nil {
+			return nil, err
+		}
+
+		// Set the encryption provider to AESGCM
+		enc.Provider = func(key []byte) (encryptor.EncryptDecryptor, error) {
+			return encryptor.NewAESGCM(key[:32])
+		}
+
+		return enc, nil
+
+	case "aes-gcm":
+		return encryptor.NewAESGCM([]byte(config.AESKey()))
 
 	case "kms":
 		if config.KMSKeyID() == "" {
-			err = errors.New("kms: No key ID set")
-		} else {
-			enc = encryptor.NewKMS(config.KMSKeyID(), config.KMSRegion())
+			return nil, errors.New("kms: No key ID set")
 		}
+		return encryptor.NewKMS(config.KMSKeyID(), config.KMSRegion()), nil
 
 	default:
-		err = errors.New("unknown decryptor")
+		return nil, errors.New("unknown decryptor")
 	}
-
-	if err != nil {
-		return nil, err
-	}
-
-	return enc, nil
 }

@@ -37,7 +37,7 @@ Drop a simple YAML file in the same directory as the binary (`./cryptic.yml` or 
 
 ```yml
 Store: "db"
-Encryptor: "aes-pbkdf2"
+Encryptor: "aes-gcm-pbkdf2"
 
 DB:
   Host: "127.0.0.1:3306"
@@ -45,7 +45,7 @@ DB:
   Username: "root"
   Password: "password"
 
-# When in "aes-pbkdf2" mode, the Key parameter is hashed
+# When in any "pbkdf2" Encryptor mode, the Key parameter is hashed
 # 4096 times with SHA-512 and used as the key for AES-256
 
 AES:
@@ -75,7 +75,7 @@ Redis:
   WriteTimeout: "5s"
   MaxRetries: 0
 
-# Encryptor can be either 'aes-pbkdf2', 'aes' or 'kms'
+# Encryptor can be either 'aes-gcm-pbkdf2', 'aes-pbkdf2', 'aes' or 'kms'
 Encryptor: "kms"
 
 # AES key size must be 16, 24 or 32 chars if encryptor = 'aes'
@@ -144,8 +144,7 @@ The idea was largely taken from [credstash](https://github.com/fugue/credstash) 
 
 # Improvements
 
-- More backends (S3/DynamoDB/memcached/etc)
-- More encryptors
+- More backends (S3/DynamoDB/memcached/MongoDB/etc)
 - Secret versioning/rotation/expiration
 - Support for pipelined requests to backends to reduce latency
 - Redis transactional existing-key check with `WATCH`
