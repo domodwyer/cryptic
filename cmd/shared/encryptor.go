@@ -17,6 +17,21 @@ func GetEncryptor(config config.Encryptor) (encryptor.EncryptDecryptor, error) {
 	case "aes":
 		return encryptor.NewAES([]byte(config.AESKey()), []byte(config.AESHmacKey()))
 
+	case "aes-gcm-pbkdf2":
+		enc, err := encryptor.NewKDF([]byte(config.KDFKey()))
+		if err != nil {
+			return nil, err
+		}
+
+		// Set the encryption provider to AESGCM
+		enc.Provider = func(key []byte) (encryptor.EncryptDecryptor, error) {
+			return encryptor.NewAESGCM(key[:32])
+		}
+
+		return enc, nil
+
+	case "aes-gcm":
+		return encryptor.NewAESGCM([]byte(config.AESKey()))
 
 	case "kms":
 		if config.KMSKeyID() == "" {

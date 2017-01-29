@@ -58,6 +58,62 @@ func TestAESKDFEncryptorIntegration(t *testing.T) {
 	}
 }
 
+// TestAESGCMKDFEncryptorIntegration ensures a key is generated, secret
+// encrypted with AESGCM, and decrypted to the same plaintext.
+func TestAESGCMKDFEncryptorIntegration(t *testing.T) {
+	tests := []struct {
+		// Test description.
+		name string
+		// Parameters.
+		want []byte
+		skey []byte
+	}{
+		{
+			"Simple string",
+			[]byte("i am a secret"),
+			[]byte("smallkey!"),
+		},
+		{
+			"Binary",
+			[]byte{
+				0xb0, 0x75, 0x11, 0x62, 0xa2, 0x3e, 0x5f, 0x2f,
+				0xca, 0xa3, 0x00, 0x1d, 0x51, 0x89, 0xc8, 0xe7,
+				0xb5, 0x15, 0xb9, 0x5c, 0x9b, 0x3e, 0x26, 0x5f,
+				0xb2, 0x6b, 0x97, 0x41, 0x16, 0x2c, 0x47, 0x10,
+			},
+			[]byte{0x42},
+		},
+	}
+
+	for _, tt := range tests {
+		e, err := NewKDF(tt.skey)
+		e.Provider = func(key []byte) (EncryptDecryptor, error) {
+			return NewAESGCM(key[:32])
+		}
+
+		if err != nil {
+			t.Errorf("%q. NewKDF() = %s", tt.name, err)
+			continue
+		}
+
+		encrypted, err := e.Encrypt(tt.want)
+		if err != nil {
+			t.Errorf("%q. Encrypt() = %s", tt.name, err)
+			continue
+		}
+
+		got, err := e.Decrypt(encrypted)
+		if err != nil {
+			t.Errorf("%q. Decrypt() = %s", tt.name, err)
+			continue
+		}
+
+		if !bytes.Equal(got, tt.want) {
+			t.Errorf("%q. Secret mismatch, got %v, want %v", tt.name, got, tt.want)
+		}
+	}
+}
+
 // Ensure errors are passed up to the caller
 func TestKDFEncrypt(t *testing.T) {
 	tests := []struct {
