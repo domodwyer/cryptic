@@ -6,6 +6,7 @@ const (
 	AESCTR
 	KMSWrapped
 	Pbkdf2
+	AESGCM
 )
 
 // Encryptor defines the Encrypt method, used to encrypt the given plain-text.
