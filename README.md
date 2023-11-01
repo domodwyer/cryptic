@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/domodwyer/cryptic.svg?branch=master)](https://travis-ci.org/domodwyer/cryptic) [![GoDoc](https://godoc.org/github.com/domodwyer/cryptic?status.svg)](https://godoc.org/github.com/domodwyer/cryptic)
 
-> ![NOTE]
+> [!NOTE]
 > This filled a gap at the time, but now there are great systems that solve credential mangement - go use one of those instead!
 
 <p align="center">
