@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/domodwyer/cryptic.svg?branch=master)](https://travis-ci.org/domodwyer/cryptic) [![GoDoc](https://godoc.org/github.com/domodwyer/cryptic?status.svg)](https://godoc.org/github.com/domodwyer/cryptic)
 
 <p align="center">
-<img src="https://s3-eu-west-1.amazonaws.com/iab-assets/cryptic-header.png" />
+<img src="https://assets.itsallbroken.com/github/cryptic-header.png" />
 </p>
 <p align="center">
 <em>Manage API keys, passwords, certificates, etc. with infrastructure you already use.</em>
